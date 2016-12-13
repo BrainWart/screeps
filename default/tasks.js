@@ -82,7 +82,7 @@ tasks.new = function(creep) {
         ])[Math.floor(Math.random() * 5)];
     	if (nextOrder && creep.memory.taskdest) {
     		nextOrder(creep);
-    		console.log(creep.memory.task);
+    		// console.log(creep.memory.task);
     	} else
     		creep.say("NO ORDERS");
     }
