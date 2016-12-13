@@ -4,7 +4,7 @@ module.exports.loop = function() {
 	for (var r in Game.rooms) {
 		var room = Game.rooms[r];
 		if (room.controller.level > room.memory.lastLevel ) {
-			Game.notify(("room [{0}] has leveled up to {1}").format(room.id, room.controller.level));
+			Game.notify("room ["+room.id+"] has leveled up to "+room.controller.level);
 			room.memory.lastLevel = room.controller.level;
 		}
 	}
