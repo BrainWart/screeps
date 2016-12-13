@@ -1,6 +1,14 @@
 var tasks = require("tasks");
 
 module.exports.loop = function() {
+	for (var r in Game.rooms) {
+		var room = Game.rooms[r];
+		if (room.controller.level > room.memory.lastLevel ) {
+			Game.notify(("room [{0}] has leveled up to {1}").format(room.id, room.controller.level));
+			room.memory.lastLevel = room.controller.level;
+		}
+	}
+	
     for (var n in Game.spawns) {
         var spawn = Game.spawns[n];
         if (spawn.canCreateCreep([MOVE, MOVE, WORK, CARRY, CARRY]) == OK) {
