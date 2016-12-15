@@ -39,12 +39,12 @@ module.exports.loop = function() {
 			for (var role in creepCounts) {
 				if (creepCounts[role] < roles[role].minimum && (spawn.canCreateCreep(roles[role].body) == OK)) {
 					if (furthest && (Math.abs(roles[furthest].minimum - creepCounts[furthest])
-							> Math.abs(roles[role].minimum - creepCounts[minimum]))) {
+							> Math.abs(roles[role].minimum - creepCounts[role]))) {
 						furthest = role;
 					}
 				}
 			}
-			if (furthest) {
+			if (furthest && roles[furthest].minimum > 0) {
 				spawn.createCreep(roles[furthest].body, undefined, {"role": furthest, "working": false});
 				console.log("new " + furthest);
 			}
