@@ -18,7 +18,9 @@ module.exports.loop = function() {
 		var creepCounts = {}
 		
 		for (var r in roles) {
-			creepCounts[r] = 0;
+			if (roles[r].minimum > 0) {
+				creepCounts[r] = 0;
+			}
 		}
 
 		for (var cn in Game.creeps) {
@@ -26,17 +28,25 @@ module.exports.loop = function() {
 			if (role) {
 				creepCounts[role]++;
 			} else {
-				 console.log(cn + " seems to have no role?");
+				console.log(cn + " seems to have no role?");
 			}
 		}
 
 		for (var n in Game.spawns) {
 			var spawn = Game.spawns[n];
 			
+			var furthest = undefined;
 			for (var role in creepCounts) {
 				if (creepCounts[role] < roles[role].minimum && (spawn.canCreateCreep(roles[role].body) == OK)) {
-					spawn.createCreep(roles[role].body, undefined, {"role": role, "working": false});
+					if (furthest && (Math.abs(roles[furthest].minimum - creepCounts[furthest])
+							> Math.abs(roles[role].minimum - creepCounts[minimum]))) {
+						furthest = role;
+					}
 				}
+			}
+			if (furthest) {
+				spawn.createCreep(roles[furthest].body, undefined, {"role": furthest, "working": false});
+				console.log("new " + furthest);
 			}
 		}
 	}
