@@ -16,6 +16,10 @@ module.exports.loop = function() {
 	
 	{ // SPAWN NEW CREEPS
 		var creepCounts = {}
+		
+		for (var r in roles) {
+			creepCounts[r] = 0;
+		}
 
 		for (var cn in Game.creeps) {
 			var role = Memory.creeps[cn].role;
