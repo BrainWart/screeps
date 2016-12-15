@@ -15,7 +15,9 @@ module.exports = {
 				dest = creep.pos.findClosestByPath(FIND_MY_STRUCTURES, {
 					filter: (structure) => { return structure.structureType == STRUCTURE_CONTROLLER }
 				});
-				creep.memory.dest = dest.id;
+				if (dest) {
+					creep.memory.dest = dest.id;
+				}
 			}
 
 			if (dest) {

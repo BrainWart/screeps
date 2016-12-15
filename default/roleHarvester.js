@@ -8,7 +8,9 @@ module.exports = {
 			dest = creep.pos.findClosestByPath(FIND_SOURCES, {
 				filter: (source) => { return source.energy > 0 }
 			});
-			creep.memory.dest = dest.id;
+			if (dest) {
+				creep.memory.dest = dest.id;
+			}
 		}
 
 		if (dest) {

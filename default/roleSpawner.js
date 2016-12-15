@@ -18,7 +18,9 @@ module.exports = {
 								&& structure.energy < structure.energyCapacity
 					}
 				});
-				creep.memory.dest = dest.id;
+				if (dest) {
+					creep.memory.dest = dest.id;
+				}
 			}
 
 			if (dest) {
