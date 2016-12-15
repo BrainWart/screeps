@@ -29,6 +29,9 @@ module.exports = {
 			}
 		} else {
 			roleHarvester.run(creep);
+			if (creep.carry.energy == creep.carryCapacity) {
+				creep.memory.working = true;
+			}
 		}
 	}
 };
