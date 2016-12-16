@@ -12,7 +12,7 @@ module.exports = {
 		if (creep.memory.working) {
 			var dest = Game.getObjectById(creep.memory.dest);
 
-			if (dest == undefined || !(dest instanceof StructureExtension || dest instanceof ContructionSite)) {
+			if (dest == undefined || !(dest instanceof ConstructionSite)) {
 				dest = creep.pos.findClosestByPath(FIND_MY_CONSTRUCTION_SITES);
 				if (dest) {
 					creep.memory.dest = dest.id;
