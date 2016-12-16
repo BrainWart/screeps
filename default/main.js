@@ -1,7 +1,8 @@
 var roles = {
 	harvester : require("roleHarvester"),
 	spawner : require("roleSpawner"),
-	upgrader : require("roleUpgrader")
+	upgrader : require("roleUpgrader"),
+	builder : require("roleBuilder")
 }
 
 module.exports.loop = function() {
