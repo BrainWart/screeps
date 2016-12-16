@@ -5,15 +5,6 @@ var roles = {
 }
 
 module.exports.loop = function() {
-	for (var r in Game.rooms) {
-		var room = Game.rooms[r];
-		if (room.controller.level > room.memory.lastLevel ) {
-			Game.notify("room ["+room.id+"] has leveled up to "+room.controller.level);
-			console.log("room ["+room.id+"] has leveled up to "+room.controller.level);
-			room.memory.lastLevel = room.controller.level;
-		}
-	}
-	
 	{ // SPAWN NEW CREEPS
 		var creepCounts = {}
 		
@@ -57,8 +48,6 @@ module.exports.loop = function() {
 
 			if (roles[creep.memory.role]) {
 				roles[creep.memory.role].run(creep);
-			} else {
-				creep.suicide();
 			}
 		}
 	}

@@ -1,8 +1,9 @@
 var roleHarvester = require("roleHarvester");
+var roleUpgrader = require("roleUpgrader");
 
 module.exports = {
-	"body": [MOVE, WORK, WORK, CARRY],
-	"minimum": 4,
+	"body": [MOVE, MOVE, WORK, CARRY, CARRY],
+	"minimum": 2,
 	"run": function(creep) {
 		if (creep.carry.energy < 1) {
 			creep.memory.working = false;
@@ -11,21 +12,20 @@ module.exports = {
 		if (creep.memory.working) {
 			var dest = Game.getObjectById(creep.memory.dest);
 
-			if (dest == undefined || !(dest instanceof StructureController)) {
-				dest = creep.pos.findClosestByPath(FIND_MY_STRUCTURES, {
-					filter: (structure) => { return structure.structureType == STRUCTURE_CONTROLLER }
-				});
+			if (dest == undefined || !(dest instanceof StructureExtension || dest instanceof ContructionSite)) {
+				dest = creep.pos.findClosestByPath(FIND_MY_CONSTRUCTION_SITES);
 				if (dest) {
 					creep.memory.dest = dest.id;
 				}
 			}
 
 			if (dest) {
-				if (creep.transfer(dest, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+				if (creep.build(dest) == ERR_NOT_IN_RANGE) {
 					creep.moveTo(dest);
 				}
 			} else {
-				console.log(creep.name + ": no controller found.");
+				console.log(creep.name + ": no construction sites found.");
+				roleUpgrader.sun(creep);
 			}
 		} else {
 			roleHarvester.run(creep);
