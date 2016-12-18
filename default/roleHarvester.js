@@ -1,5 +1,5 @@
 module.exports = {
-	"body" : [MOVE, WORK, WORK, CARRY],
+	"body" : function(energy) { return [MOVE, WORK, WORK, CARRY]; },
 	"minimum": 0,
 	"run": function(creep) {
 		var dest = Game.getObjectById(creep.memory.dest);

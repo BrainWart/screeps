@@ -2,7 +2,7 @@ var roleHarvester = require("roleHarvester");
 var roleUpgrader = require("roleUpgrader");
 
 module.exports = {
-	"body": [MOVE, MOVE, WORK, CARRY, CARRY],
+	"body": function(energy) { return [MOVE, MOVE, WORK, CARRY, CARRY]; },
 	"minimum": 2,
 	"run": function(creep) {
 		if (creep.carry.energy < 1) {
