@@ -7,7 +7,7 @@ module.exports = {
 	},
 	"minimum": 0,
 	"gravity": 1,
-	"setup": function(creepName) }
+	"setup": function(creepName) {
 
 	},
 	"run": function(creep) {
