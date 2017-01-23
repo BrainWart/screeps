@@ -3,7 +3,7 @@ var roleHarvester = require("roleHarvester");
 module.exports = {
 	"body": function(energy) { return [MOVE, WORK, WORK, CARRY]; },
 	"minimum": 4,
-	"gravity": 0;
+	"gravity": 0,
 	"run": function(creep) {
 		if (creep.carry.energy < 1) {
 			creep.memory.working = false;
