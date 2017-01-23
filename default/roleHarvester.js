@@ -1,6 +1,15 @@
 module.exports = {
-	"body" : function(energy) { return [MOVE, WORK, WORK, CARRY]; },
+	"body" : function(energy) {
+		let body = [MOVE];
+		for (let a = energy - 50; a > 100 || body.length > 6; a -= 100)
+			body.push(WORK);
+		return body;
+	},
 	"minimum": 0,
+	"gravity": 1,
+	"setup": function(creepName) }
+
+	},
 	"run": function(creep) {
 		var dest = Game.getObjectById(creep.memory.dest);
 

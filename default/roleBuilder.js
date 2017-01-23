@@ -4,6 +4,7 @@ var roleUpgrader = require("roleUpgrader");
 module.exports = {
 	"body": function(energy) { return [MOVE, MOVE, WORK, CARRY, CARRY]; },
 	"minimum": 2,
+	"gravity": 5,
 	"run": function(creep) {
 		if (creep.carry.energy < 1) {
 			creep.memory.working = false;
