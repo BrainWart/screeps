@@ -1,4 +1,4 @@
-let roles = require("main").roles;
+let roles = require("data").roles;
 
 module.exports = function() {
 	Creep.prototype.work = function() {
