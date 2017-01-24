@@ -11,7 +11,7 @@ module.exports = function() {
 		}
 
 		// Kill creeps with broken memory
-		if (_.isNull(this.memory) || _.isNull(this.memory.role)) {
+		if (_.isNull(this.memory) || _.isEmpty(this.memory) || _.isNull(this.memory.role)) {
 			delete Memory.creeps[this.name];
 			this.say("I'm broken!!  *dead*", false);
 			this.suicide();
