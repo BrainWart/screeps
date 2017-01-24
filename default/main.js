@@ -8,7 +8,7 @@ module.exports.loop = function() {
     
     { // CREEP LOGIC
 		for (var cn in Game.creeps) {
-			Game.creeps[cn].run();
+			Game.creeps[cn].work();
 		}
 	}
 }
