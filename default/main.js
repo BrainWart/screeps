@@ -6,6 +6,7 @@ var roles = {
 	upgrader : require("role.Upgrader"),
 	builder : require("role.Builder")
 }
+module.exports.roles = roles;
 
 module.exports.loop = function() {
 	{ // SPAWN NEW CREEPS
@@ -13,11 +14,7 @@ module.exports.loop = function() {
     
     { // CREEP LOGIC
 		for (var cn in Game.creeps) {
-			var creep = Game.creeps[cn];
-
-			if (roles[creep.memory.role]) {
-				roles[creep.memory.role].run(creep);
-			}
+			Game.creeps[cn].run();
 		}
 	}
 }
