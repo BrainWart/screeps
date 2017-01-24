@@ -1,8 +1,10 @@
+require("prototype.Creep")();
+
 var roles = {
-	harvester : require("roleHarvester"),
-	spawner : require("roleSpawner"),
-	upgrader : require("roleUpgrader"),
-	builder : require("roleBuilder")
+	harvester : require("role.Harvester"),
+	spawner : require("role.Spawner"),
+	upgrader : require("role.Upgrader"),
+	builder : require("role.Builder")
 }
 
 module.exports.loop = function() {

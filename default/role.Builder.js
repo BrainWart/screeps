@@ -1,5 +1,5 @@
-var roleHarvester = require("roleHarvester");
-var roleUpgrader = require("roleUpgrader");
+var roleHarvester = require("role.Harvester");
+var roleUpgrader = require("role.Upgrader");
 
 module.exports = {
 	"body": function(energy) { return [MOVE, MOVE, WORK, CARRY, CARRY]; },
