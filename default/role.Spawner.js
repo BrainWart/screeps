@@ -3,7 +3,6 @@ var roleHarvester = require("role.Harvester");
 module.exports = {
 	"body": function(energy) { return [MOVE, WORK, WORK, CARRY]; },
 	"minimum": 3,
-	"gravity": 2,
 	"run": function(creep) {
 		if (creep.carry.energy < 1) {
 			creep.memory.working = false;
@@ -11,7 +10,7 @@ module.exports = {
 
 		if (creep.memory.working) {
 			var dest = Game.getObjectById(creep.memory.dest);
-
+			
 			if (dest == undefined || !(dest instanceof StructureExtension || dest instanceof StructureSpawn)) {
 				dest = creep.pos.findClosestByPath(FIND_STRUCTURES, {
 					filter: (structure) => { return structure.structureType == STRUCTURE_EXTENSION
@@ -25,8 +24,13 @@ module.exports = {
 			}
 
 			if (dest) {
-				if (creep.transfer(dest, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-					creep.moveTo(dest);
+				switch (creep.transfer(dest, RESOURCE_ENERGY)) {
+					case ERR_NOT_IN_RANGE:
+						creep.moveTo(dest);
+						break;
+					case ERR_FULL:
+						creep.memory.dest = undefined;
+						break;
 				}
 			} else {
 				console.log(creep.name + ": no spawn/extension found.");

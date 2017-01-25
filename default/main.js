@@ -41,7 +41,7 @@ module.exports.loop = function() {
 					if (spawn.energy == spawn.energyCapacity) {
 						let role = queue.shift();
 						if (spawn.canCreateCreep(roles[role].body()) == OK) {
-							spawn.createCreep(roles[role].body(), null, {"role": role, "birth": r});
+							spawn.createCreep(roles[role].body(), undefined, {"role": role, "birth": r});
 						} else {
 							queue.push(role);
 							console.log("FAILURE: failed to spawn creep [" + role + "]");
