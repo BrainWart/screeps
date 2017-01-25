@@ -8,7 +8,7 @@ function Waypoint(waypointName, roomPosition) {
 	if (!Memory.waypoints[this.roomName])
 		Memory.waypoints[this.roomName] = {};
 	
-	Memory.waypoints[roomName][waypointName] = {
+	Memory.waypoints[this.roomName][waypointName] = {
 		x: roomPosition.x,
 		y: roomPosition.y
 	}
