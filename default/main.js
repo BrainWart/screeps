@@ -7,8 +7,6 @@ module.exports.loop = function() {
     let roleCounts = {}
 	_.forEach(roles, (obj, name) => (roleCounts[name] = 0));
 
-	console.log("working!");
-
     { // CREEP LOGIC
 		for (var cn in Memory.creeps) {
 			if (Game.creeps[cn]) {
