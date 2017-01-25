@@ -29,9 +29,11 @@ module.exports = {
 						creep.moveTo(dest);
 						break;
 				}
-
-				if (dest.energy == dest.energyCapacity)
+				console.log("derp");
+				if (dest.energy == dest.energyCapacity) {
+					console.log("RAWR!!");
 					creep.memory.dest = undefined;
+				}
 			} else {
 				console.log(creep.name + ": no spawn/extension found.");
 			}
