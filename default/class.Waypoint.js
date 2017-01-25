@@ -1,17 +1,23 @@
-function Waypoint(waypointName, roomPosition) {
-	this.roomName = roomPosition.roomName;
+function Waypoint(waypointName, roomName, x, y) {
 	this.name = waypointName;
-	
+	this.roomName = roomName;
+
 	if (!Memory.waypoints)
 		Memory.waypoints = {};
 	
-	if (!Memory.waypoints[this.roomName])
-		Memory.waypoints[this.roomName] = {};
+	if (!Memory.waypoints[roomName])
+		Memory.waypoints[roomName] = {};
 	
 	Memory.waypoints[this.roomName][waypointName] = {
-		x: roomPosition.x,
-		y: roomPosition.y
+		"x": x,
+		"y": y
 	}
+}
+Waypoint.fromRoomPosition = function(waypointName, roomPosition) {
+	return new Waypoint(waypointName, roomPosition.roomName, roomPosition.x, roomPosition.y);
+}
+Waypoint.fromFlag = function(flag) {
+	return new Waypoint(flag.name, flag.pos.roomName, flag.pos.x, flag.pos.y);
 }
 
 Object.defineProperty(Waypoint.prototype, "x", {
