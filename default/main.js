@@ -20,10 +20,22 @@ module.exports.loop = function() {
 		}
 	}
 
-	/* { // SPAWN NEW CREEPS
-		for (var role in roles) {
-			if (roles[role].shouldSpawn(roleCount)) {
-				
+	{ // SPAWN NEW CREEPS
+		for (let r in Game.rooms) {
+			let room = Game.rooms[r];
+			let queue = room.spawnQueue;
+			
+			if (queue.length > 0) {
+				let spawns = room.getSpawns();
+
+				for (let s in spawns) {
+					if (s.energy == s.energyCapacity) {
+						let role = queue.shift();
+						s.createCreep(roles[role].body(), null, {"role": role});
+					}
+				}
+
+				room.spawnQueue = queue;
 			}
 		}
 	} //*/
