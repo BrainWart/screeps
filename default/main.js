@@ -1,4 +1,5 @@
 require("prototype.Creep")();
+require("prototype.Room")();
 
 var roles = require("data").roles;
 
@@ -15,6 +16,10 @@ module.exports.loop = function() {
 				if (role)
 					roleCounts[role]++;
 			} else {
+				let room = Game.rooms[Memory.creeps[cn].birth];
+				let queue = room.spawnQueue;
+				queue.push(Memory.creeps[cn].role]);
+				room.spawnQueue = queue;
 				delete Memory.creeps[cn];
 			}
 		}
@@ -29,9 +34,16 @@ module.exports.loop = function() {
 				let spawns = room.getSpawns();
 
 				for (let s in spawns) {
-					if (s.energy == s.energyCapacity) {
+					let spawn = spawns[s];
+
+					if (spawn.energy == spawn.energyCapacity) {
 						let role = queue.shift();
-						s.createCreep(roles[role].body(), null, {"role": role});
+						if (spawn.canCreateCreep(roles[role].body())) {
+							spawn.createCreep(roles[role].body(), null, {"role": role, "birth": r});
+						} else {
+							queue.push(role);
+							console.log("FAILURE: failed to spawn creep [" + role + "]");
+						}
 					}
 				}
 
