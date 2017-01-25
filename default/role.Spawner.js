@@ -28,10 +28,10 @@ module.exports = {
 					case ERR_NOT_IN_RANGE:
 						creep.moveTo(dest);
 						break;
-					case ERR_FULL:
-						creep.memory.dest = undefined;
-						break;
 				}
+
+				if (dest.energy == dest.energyCapacity)
+					creep.memory.dest = undefined;
 			} else {
 				console.log(creep.name + ": no spawn/extension found.");
 			}
