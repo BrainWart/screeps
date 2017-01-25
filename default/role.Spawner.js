@@ -13,8 +13,8 @@ module.exports = {
 			
 			if (dest == undefined || !(dest instanceof StructureExtension || dest instanceof StructureSpawn)) {
 				dest = creep.pos.findClosestByPath(FIND_STRUCTURES, {
-					filter: (structure) => { return (structure instanceof Extension
-								|| structure instanceof Spawn)
+					filter: (structure) => { return (structure instanceof StructureExtension
+								|| structure instanceof StructureSpawn)
 								&& structure.energy < structure.energyCapacity
 					}
 				});
