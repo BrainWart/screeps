@@ -29,9 +29,8 @@ module.exports = {
 						creep.moveTo(dest);
 						break;
 				}
-				console.log("derp");
+
 				if (dest.energy == dest.energyCapacity) {
-					console.log("RAWR!!");
 					creep.memory.dest = undefined;
 				}
 			} else {
