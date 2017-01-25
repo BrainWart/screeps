@@ -15,11 +15,13 @@ module.exports.loop = function() {
 				Game.creeps[cn].work();
 				if (role)
 					roleCounts[role]++;
-			} else {
+			} else if (Memory.creeps[cn].birth) {
 				let room = Game.rooms[Memory.creeps[cn].birth];
 				let queue = room.spawnQueue;
 				queue.push(Memory.creeps[cn].role);
 				room.spawnQueue = queue;
+				delete Memory.creeps[cn];
+			} else {
 				delete Memory.creeps[cn];
 			}
 		}
@@ -38,7 +40,7 @@ module.exports.loop = function() {
 
 					if (spawn.energy == spawn.energyCapacity) {
 						let role = queue.shift();
-						if (spawn.canCreateCreep(roles[role].body())) {
+						if (spawn.canCreateCreep(roles[role].body()) == OK) {
 							spawn.createCreep(roles[role].body(), null, {"role": role, "birth": r});
 						} else {
 							queue.push(role);
