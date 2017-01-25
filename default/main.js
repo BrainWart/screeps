@@ -18,7 +18,7 @@ module.exports.loop = function() {
 			} else {
 				let room = Game.rooms[Memory.creeps[cn].birth];
 				let queue = room.spawnQueue;
-				queue.push(Memory.creeps[cn].role]);
+				queue.push(Memory.creeps[cn].role);
 				room.spawnQueue = queue;
 				delete Memory.creeps[cn];
 			}
