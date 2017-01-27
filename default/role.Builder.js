@@ -28,7 +28,7 @@ module.exports = {
 				}
 			} else {
 				console.log(creep.name + ": no construction sites found.");
-				roleUpgrader.sun(creep);
+				roleUpgrader.run(creep);
 			}
 		} else {
 			roleHarvester.run(creep);
