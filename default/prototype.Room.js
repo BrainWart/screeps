@@ -13,4 +13,25 @@ module.exports = function() {
 				return Game.flags[source.id] == undefined;
 			}}));
 	};
+	Room.prototype.getEnergy = function() {
+		let workingSources = this.find(FIND_SOURCES, {filter: (source) => (Game.flags[source.id])});
+		for (let source in workingSources) {
+			let atFlag = Game.flags[source.id].pos.lookAt();
+			for (let object in atFlag) {
+				switch (object.type) {
+					case "resource":
+						if (object.resource.resourceType == RESOURCE_ENERGY)
+							return object.resource;
+						break;
+					case "structure":
+						let structureType == object.structure.structureType;
+						if ((structureType == STRUCTURE_CONTAINER || structureType == STRUCTURE_STORAGE)
+									&& object.structure.store[RESOURCE_ENERGY]) {
+							return object.structure;
+						}
+						break;
+				}
+			}
+		}
+	};
 };

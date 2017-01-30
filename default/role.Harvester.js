@@ -1,5 +1,3 @@
-//require("prototype.Room")();
-
 var Harvester = {}
 
 Harvester.body = function(energy) {
@@ -17,11 +15,8 @@ function firstSpawn(creep) {
 	creep.memory.path = Room.serializePath(path);
 }
 Harvester.run = function(creep) {
-	if (creep.spawning) {
-		if (creep.memory.sourceId == undefined) {
-			firstSpawn(creep);
-		}
-		return;
+	if (creep.memory.sourceId == undefined) {
+		firstSpawn(creep);
 	}
 
 	let id = creep.memory.sourceId;
@@ -30,7 +25,7 @@ Harvester.run = function(creep) {
 
 	if (creep.pos.isEqualTo(flag.pos)) {
 		creep.harvest(source);
-	} else {
+	} else if (creep.fatigue == 0) {
 		let path = Room.deserializePath(creep.memory.path);
 
 		switch(creep.moveByPath(path)) {
@@ -38,7 +33,6 @@ Harvester.run = function(creep) {
 				creep.say("no MOVE part");
 				break;
 			case ERR_TIRED:
-				creep.say("zzz");
 				break;
 			case ERR_INVALID_ARGS:
 				creep.say("illegal path");

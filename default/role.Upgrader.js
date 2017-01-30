@@ -1,38 +1,51 @@
-var roleHarvester = require("role.Harvester");
+let Upgrader = {}
 
-module.exports = {
-	"body": function(energy) { return [MOVE, WORK, WORK, CARRY]; },
-	"minimum": 4,
-	"gravity": 0,
-	"run": function(creep) {
-		if (creep.carry.energy < 1) {
-			creep.memory.working = false;
+Upgrader.body = function(energy) { return [MOVE, WORK, WORK, CARRY]; };
+
+function firstRun(creep) {
+	creep.memory.working = false;
+	creep.memory.controller = creep.room.controller.id
+	creep.memory.energy = undefined;
+}
+
+Upgrader.run = function(creep) {
+	if (creep.memory.working == undefined) firstRun(creep);
+
+	if (creep.carry[RESOURCE_ENERGY] == 0) {
+		creep.memory.working == false;
+	} else if (creep.carry[RESOURCE_ENERGY] == creep.carryCapacity) {
+		creep.memory.working == true;
+	}
+
+	if (creep.memory.working) {
+		let controller = Game.getObjectById(creep.memory.controller);
+		if (creep.upgradeController(controller) == ERR_NOT_IN_RANGE) {
+			creep.moveTo(controller);
+		}
+	} else {
+		let energyObj = Game.getObjectById(creep.memory.energy);
+
+		if ((energyObj instanceOf Resource && energyObj.amount == 0)
+				|| ((energyObj instanceOf StructureContainer || energyObj instanceOf StructureStorage)
+						&& energyObj.store[RESOURCE_ENERGY] == 0)) {
+			energyObj = undefined;
+		}
+		
+		if (energyObj == undefined) {
+			energyObj = creep.room.getEnergy();
+			creep.memory.energy = energyObj.id;
 		}
 
-		if (creep.memory.working) {
-			var dest = Game.getObjectById(creep.memory.dest);
-
-			if (dest == undefined || !(dest instanceof StructureController)) {
-				dest = creep.pos.findClosestByPath(FIND_MY_STRUCTURES, {
-					filter: (structure) => { return structure.structureType == STRUCTURE_CONTROLLER }
-				});
-				if (dest) {
-					creep.memory.dest = dest.id;
-				}
+		if (energyObj instanceOf Resource) {
+			if (creep.pickup(energyObj) == ERR_NOT_IN_RANGE) {
+				creep.moveTo(energyObj);
 			}
-
-			if (dest) {
-				if (creep.transfer(dest, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-					creep.moveTo(dest);
-				}
-			} else {
-				console.log(creep.name + ": no controller found.");
-			}
-		} else {
-			roleHarvester.run(creep);
-			if (creep.carry.energy == creep.carryCapacity) {
-				creep.memory.working = true;
+		} else if (energyObj instanceOf StructureStorage || energyObj instanceOf StructureContainer) {
+			if (creep.withdraw(energyObj, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+				creep.moveTo(energyObj);
 			}
 		}
 	}
-};
+}
+
+module.exports = Upgrader;
