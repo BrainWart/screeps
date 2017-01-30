@@ -4,7 +4,7 @@ module.exports = function() {
 	Creep.prototype.work = function() {
 		// Don't waste cycles on a creep doing nothing
 		if (this.spawning) {
-			return;
+			// return;
 		}
 
 		// Kill old creeps and remove old memory

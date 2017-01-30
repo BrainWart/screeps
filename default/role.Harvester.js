@@ -1,4 +1,4 @@
-equire("prototype.Room")();
+require("prototype.Room")();
 
 var Harvester = {}
 
@@ -12,7 +12,7 @@ Harvester.body = function(energy) {
 function firstSpawn(creep) {
 	let source = creep.room.getOpenSource();
 	let path = creep.pos.findPathTo(source);
-	creep.room.createFlag(path[path.length-1].x,path[path.length-1].y, source.id, COLOR_YELLOW, COLOR_YELLOW);
+	creep.room.createFlag(path[path.length-2].x,path[path.length-2].y, source.id, COLOR_YELLOW, COLOR_YELLOW);
 	creep.memory.sourceId = source.id;
 	creep.memory.path = Room.serializePath(path);
 }
