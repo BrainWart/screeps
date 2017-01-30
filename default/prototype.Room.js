@@ -8,7 +8,9 @@ module.exports = function() {
 		get: function() { return this.memory.spawnQueue ? this.memory.spawnQueue : data.spawnQueue; },
 		set: function(queue) { this.memory.spawnQueue = queue; }
 	});
-	Room.prototype.getEnergyPos = function() {
-
+	Room.prototype.getOpenSource = function() {
+		return _.first(this.find(FIND_SOURCES, {filter: function(source) {
+				return Game.flags[source.id] == undefined;
+			});
 	};
 };

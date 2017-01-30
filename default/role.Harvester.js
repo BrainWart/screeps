@@ -1,4 +1,3 @@
-
 var Harvester = {}
 
 Harvester.body = function(energy) {
@@ -7,6 +6,7 @@ Harvester.body = function(energy) {
 		body.push(WORK);
 	return body;
 }
+
 Harvester.run =  function(creep) {
 	if (creep.spawning) return;
 
