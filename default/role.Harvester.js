@@ -1,4 +1,3 @@
-var Waypoint = require("class.waypoint");
 
 var Harvester = {}
 
