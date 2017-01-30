@@ -11,6 +11,6 @@ module.exports = function() {
 	Room.prototype.getOpenSource = function() {
 		return _.first(this.find(FIND_SOURCES, {filter: function(source) {
 				return Game.flags[source.id] == undefined;
-			});
+			}));
 	};
 };
