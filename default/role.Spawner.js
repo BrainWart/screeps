@@ -19,7 +19,7 @@ Upgrader.run = function(creep) {
 
 	if (creep.memory.working) {
 		let spawn = Game.getObjectById(creep.memory.spawn);
-		if (spawn == undefined) {
+		if (spawn == undefined || spawn.energy == spawn.energyCapacity) {
 			spawn = creep.pos.findClosestByRange(FIND_STRUCTURES, {
 				filter: (structure) => {return (structure instanceof StructureExtension
 					|| structure instanceof StructureSpawn)
