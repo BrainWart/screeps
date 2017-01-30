@@ -1,4 +1,4 @@
-require("prototype.Room")();
+equire("prototype.Room")();
 
 var Harvester = {}
 

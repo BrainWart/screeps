@@ -19,6 +19,6 @@ module.exports = function() {
 			return;
 		}
 
-		roles[this.memory.role].run(this);
+		require(roles[this.memory.role]).run(this);
 	};
 };
