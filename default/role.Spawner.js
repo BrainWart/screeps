@@ -4,7 +4,7 @@ Upgrader.body = function(energy) { return [MOVE, WORK, WORK, CARRY]; };
 
 function firstRun(creep) {
 	creep.memory.working = false;
-	creep.memory.spawn = = undefined;
+	creep.memory.spawn = undefined;
 	creep.memory.energy = undefined;
 }
 
