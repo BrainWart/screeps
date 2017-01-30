@@ -7,7 +7,7 @@ Harvester.body = function(energy) {
 		body.push(WORK);
 	return body;
 }
-Harvester.work =  function(creep) {
+Harvester.run =  function(creep) {
 	if (creep.spawning) return;
 
 	let source = Game.getObjectById(creep.memory.source);
