@@ -1,4 +1,4 @@
-require("prototype.Room")();
+//require("prototype.Room")();
 
 var Harvester = {}
 
@@ -18,7 +18,7 @@ function firstSpawn(creep) {
 }
 Harvester.run = function(creep) {
 	if (creep.spawning) {
-		if (creep.memory.source == undefined) {
+		if (creep.memory.sourceId == undefined) {
 			firstSpawn(creep);
 		}
 		return;
