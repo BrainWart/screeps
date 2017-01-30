@@ -16,7 +16,7 @@ module.exports = function() {
 	Room.prototype.getEnergy = function() {
 		let workingSources = this.find(FIND_SOURCES, {filter: (source) => (Game.flags[source.id])});
 		for (let source in workingSources) {
-			let atFlag = Game.flags[workingSources[source.id]].pos.look();
+			let atFlag = Game.flags[workingSources[source].id].pos.look();
 			for (let o in atFlag) {
 				let object = atFlag[o];
 				switch (object.type) {
