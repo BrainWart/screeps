@@ -1,46 +1,62 @@
-var roleHarvester = require("role.Harvester");
+let Upgrader = {}
 
-module.exports = {
-	"body": function(energy) { return [MOVE, WORK, WORK, CARRY]; },
-	"minimum": 3,
-	"run": function(creep) {
-		if (creep.carry.energy < 1) {
-			creep.memory.working = false;
+Upgrader.body = function(energy) { return [MOVE, WORK, WORK, CARRY]; };
+
+function firstRun(creep) {
+	creep.memory.working = false;
+	creep.memory.spawn = = undefined;
+	creep.memory.energy = undefined;
+}
+
+Upgrader.run = function(creep) {
+	if (creep.memory.working == undefined) firstRun(creep);
+
+	if (creep.carry[RESOURCE_ENERGY] == 0) {
+		creep.memory.working = false;
+	} else if (creep.carry[RESOURCE_ENERGY] == creep.carryCapacity) {
+		creep.memory.working = true;
+	}
+
+	if (creep.memory.working) {
+		let spawn = Game.getObjectById(creep.memory.spawn);
+		if (spawn == undefined) {
+			spawn = creep.findClosestByRange(FIND_STRUCTURES, {
+				filter: (structure) => {return (structure instanceof StructureExtension
+					|| structure instanceof StructureSpawn)
+					&& structure.energy < structure.energyCapacity}});
+			if (spawn == undefined) {
+				creep.say("no work.");
+				return;
+			}
+			creep.memory.spawn = spawn.id;
+		}
+		if (creep.transfer(spawn, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+			creep.moveTo(spawn);
+		}
+	} else {
+		let energyObj = Game.getObjectById(creep.memory.energy);
+
+		if ((energyObj instanceof Resource && energyObj.amount == 0)
+				|| ((energyObj instanceof StructureContainer || energyObj instanceof StructureStorage)
+						&& energyObj.store[RESOURCE_ENERGY] == 0)) {
+			energyObj = undefined;
+		}
+		
+		if (energyObj == undefined) {
+			energyObj = creep.room.getEnergy();
+			creep.memory.energy = energyObj.id;
 		}
 
-		if (creep.memory.working) {
-			var dest = Game.getObjectById(creep.memory.dest);
-			
-			if (dest == undefined || !(dest instanceof StructureExtension || dest instanceof StructureSpawn)) {
-				dest = creep.pos.findClosestByPath(FIND_STRUCTURES, {
-					filter: (structure) => { return (structure instanceof StructureExtension
-								|| structure instanceof StructureSpawn)
-								&& structure.energy < structure.energyCapacity
-					}
-				});
-				if (dest) {
-					creep.memory.dest = dest.id;
-				}
+		if (energyObj instanceof Resource) {
+			if (creep.pickup(energyObj) == ERR_NOT_IN_RANGE) {
+				creep.moveTo(energyObj);
 			}
-
-			if (dest) {
-				switch (creep.transfer(dest, RESOURCE_ENERGY)) {
-					case ERR_NOT_IN_RANGE:
-						creep.moveTo(dest);
-						break;
-				}
-
-				if (dest.energy == dest.energyCapacity) {
-					creep.memory.dest = undefined;
-				}
-			} else {
-				console.log(creep.name + ": no spawn/extension found.");
-			}
-		} else {
-			roleHarvester.run(creep);
-			if (creep.carry.energy == creep.carryCapacity) {
-				creep.memory.working = true;
+		} else if (energyObj instanceof StructureStorage || energyObj instanceof StructureContainer) {
+			if (creep.withdraw(energyObj, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+				creep.moveTo(energyObj);
 			}
 		}
 	}
-};
+}
+
+module.exports = Upgrader;
