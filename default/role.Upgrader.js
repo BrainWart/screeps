@@ -12,9 +12,9 @@ Upgrader.run = function(creep) {
 	if (creep.memory.working == undefined) firstRun(creep);
 
 	if (creep.carry[RESOURCE_ENERGY] == 0) {
-		creep.memory.working == false;
+		creep.memory.working = false;
 	} else if (creep.carry[RESOURCE_ENERGY] == creep.carryCapacity) {
-		creep.memory.working == true;
+		creep.memory.working = true;
 	}
 
 	if (creep.memory.working) {
