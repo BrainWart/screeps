@@ -9,8 +9,8 @@ function Waypoint(waypointName, roomName, x, y) {
 		Memory.waypoints[roomName] = {};
 	
 	Memory.waypoints[this.roomName][waypointName] = {
-		"x": x,
-		"y": y
+		"x": x ? x : Memory.waypoints[this.roomName][waypointName].x,
+		"y": y ? y : Memory.waypoints[this.roomName][waypointName].y
 	}
 }
 Waypoint.fromRoomPosition = function(waypointName, roomPosition) {

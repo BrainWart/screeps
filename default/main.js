@@ -10,18 +10,24 @@ module.exports.loop = function() {
     { // CREEP LOGIC
 		for (var cn in Memory.creeps) {
 			if (Game.creeps[cn]) {
+				// Make living creeps work
 				let creep = Game.creeps[cn];
 				let role = Memory.creeps[cn].role;
 				Game.creeps[cn].work();
 				if (role)
 					roleCounts[role]++;
 			} else if (Memory.creeps[cn].birth) {
+				// Add dead creep to the spawn queue
 				let room = Game.rooms[Memory.creeps[cn].birth];
 				let queue = room.spawnQueue;
-				queue.push(Memory.creeps[cn].role);
+				queue.push({
+					role: Memory.creeps[cn].role,
+					name: cn,
+					});
 				room.spawnQueue = queue;
 				delete Memory.creeps[cn];
 			} else {
+				// Clear memory of dead creeps
 				delete Memory.creeps[cn];
 			}
 		}
@@ -39,9 +45,9 @@ module.exports.loop = function() {
 					let spawn = spawns[s];
 
 					if (spawn.energy == spawn.energyCapacity) {
-						let role = queue.shift();
-						if (spawn.canCreateCreep(roles[role].body()) == OK) {
-							spawn.createCreep(roles[role].body(), undefined, {"role": role, "birth": r});
+						let creepData = queue.shift();
+						if (spawn.canCreateCreep(roles[creepData.role].body()) == OK) {
+							spawn.createCreep(roles[creepData.role].body(), creepData.name, {"role": creepData.role, "birth": r});
 						} else {
 							queue.push(role);
 							console.log("FAILURE: failed to spawn creep [" + role + "]");
@@ -52,5 +58,5 @@ module.exports.loop = function() {
 				room.spawnQueue = queue;
 			}
 		}
-	} //*/
+	}
 }

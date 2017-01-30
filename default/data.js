@@ -5,5 +5,13 @@ module.exports = {
 		"upgrader": require("role.Upgrader"),
 		"spawner": require("role.Spawner")
 	},
-	"spawnQueue": ["upgrader", "harvester", "harvester", "spawner", "builder"]
+	// TODO: create an intelligent spawn queue
+	//"spawnQueue": ["harvester", "upgrader", "harvester", "spawner", "builder"]
+	"spawnQueue": [
+		{role:"harvester"},
+		{role:"upgrader"},
+		{role:"harvester"},
+		{role:"spawner"},
+		{role:"builder"}
+		]
 };
