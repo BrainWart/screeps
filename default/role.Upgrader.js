@@ -25,8 +25,8 @@ Upgrader.run = function(creep) {
 	} else {
 		let energyObj = Game.getObjectById(creep.memory.energy);
 
-		if ((energyObj instanceOf Resource && energyObj.amount == 0)
-				|| ((energyObj instanceOf StructureContainer || energyObj instanceOf StructureStorage)
+		if ((energyObj instanceof Resource && energyObj.amount == 0)
+				|| ((energyObj instanceof StructureContainer || energyObj instanceof StructureStorage)
 						&& energyObj.store[RESOURCE_ENERGY] == 0)) {
 			energyObj = undefined;
 		}
@@ -36,11 +36,11 @@ Upgrader.run = function(creep) {
 			creep.memory.energy = energyObj.id;
 		}
 
-		if (energyObj instanceOf Resource) {
+		if (energyObj instanceof Resource) {
 			if (creep.pickup(energyObj) == ERR_NOT_IN_RANGE) {
 				creep.moveTo(energyObj);
 			}
-		} else if (energyObj instanceOf StructureStorage || energyObj instanceOf StructureContainer) {
+		} else if (energyObj instanceof StructureStorage || energyObj instanceof StructureContainer) {
 			if (creep.withdraw(energyObj, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
 				creep.moveTo(energyObj);
 			}

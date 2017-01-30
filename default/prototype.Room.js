@@ -24,7 +24,7 @@ module.exports = function() {
 							return object.resource;
 						break;
 					case "structure":
-						let structureType == object.structure.structureType;
+						let structureType = object.structure.structureType;
 						if ((structureType == STRUCTURE_CONTAINER || structureType == STRUCTURE_STORAGE)
 									&& object.structure.store[RESOURCE_ENERGY]) {
 							return object.structure;
