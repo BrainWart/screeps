@@ -1,3 +1,5 @@
 module.exports.loop = function() {
-	console.log("poopy poop");
+	for (let room in Game.rooms) {
+		console.log(room);
+	}
 }
