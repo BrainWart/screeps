@@ -95,7 +95,8 @@ module.exports = {
 				}
 				if (!targetId) {
 					let source = creep.room.find(FIND_SOURCES_ACTIVE)[0];
-					targetId = source.id;
+					if (source)
+						targetId = source.id;
 				}
 				
 				creep.memory.targetId = targetId;

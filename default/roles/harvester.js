@@ -29,7 +29,7 @@ module.exports = {
 			if (target) {
 				creep.memory.targetId = target.id;
 				console.log("harvester {0}: now targets {1}".format(creep.name, target.id));
-				
+			}
 		}
 	}
 }
