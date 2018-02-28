@@ -55,7 +55,7 @@ def main():
     for arg in args:
         try:
             contents = io.open(arg).read()
-            dataObj["modules"][arg.replace("/", "_").replace(".js", "")] = contents
+            dataObj["modules"][arg.replace("/", "_").replace("\\", "_").replace(".js", "")] = contents
         except io.IOError as err:
             print("couldn't open file:: " + arg)
     
