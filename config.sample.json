@@ -1,0 +1,7 @@
+{
+	"branch": "default",
+	"url": "https://screeps.com/api/user/code",
+	"token": "YOUR TOKEN",
+	"path": "default/",
+	"globs": ["*.js"]
+}
