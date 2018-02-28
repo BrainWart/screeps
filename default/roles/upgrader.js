@@ -57,11 +57,13 @@ module.exports = {
 				}
 				if (!targetId) {
 					let source = creep.room.find(FIND_SOURCES_ACTIVE)[0];
-					targetId = source.id;
+					if (source)
+						targetId = source.id;
 				}
 				
 				creep.memory.targetId = targetId;
-				console.log("upgrader {0}: now targets {1}".format(creep.name, creep.memory.targetId));
+				if (targetId)
+					console.log("upgrader {0}: now targets {1}".format(creep.name, targetId));
 			}
 
 			if (creep.carry[RESOURCE_ENERGY] == creep.carryCapacity) creep.memory.working = true;

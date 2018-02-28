@@ -26,9 +26,10 @@ module.exports = {
 			}
 		} else {
 			target = creep.room.find(FIND_SOURCES_ACTIVE)[0];
-			if (target)
+			if (target) {
 				creep.memory.targetId = target.id;
-			console.log("harvester {0}: now targets {1}".format(creep.name, target.id));
+				console.log("harvester {0}: now targets {1}".format(creep.name, target.id));
+				
 		}
 	}
 }
