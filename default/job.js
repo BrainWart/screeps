@@ -6,7 +6,14 @@ function job(state) {
     this.name = "job";
 }
 
-job.prototype = new Object();
+job.getJob = function(type, state) {
+    let nJob = require(type)(state);
+    if (nJob instanceof job)
+        return nJob;
+    throw new Exception("'" + type + "' is not a job!");
+}
+
+job.prototype = {};
 job.prototype.getstate = function() {
     return jobState;
 }
