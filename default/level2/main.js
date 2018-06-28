@@ -60,25 +60,49 @@ _.forEach(Game.creeps, function(creep) {
     }
 });
 
+function nextRole() {
+    if (counts.upgrader < 3) {
+        return "upgrader";
+    } else if (counts.spawner < 2) {
+        return "spawner";
+    } else if (counts.builder < 3) {
+        return "builder";
+    }
+
+    return null;
+}
+
 function assignRole(creep) {
     if (counts.upgrader < 3) {
         counts.upgrader += 1;
         creep.memory.role = "upgrader";
         creep.memory.actions = ["upgrade"];
+        return;
     } else if (counts.spawner < 2) {
         counts.spawner += 1;
         creep.memory.role = "spawner";
         creep.memory.actions = ["spawn"];
+        return;
     } else if (counts.builder < 3) {
         counts.builder += 1;
         creep.memory.role = "builder";
         creep.memory.actions = ["build"];
+        return;
     }
 }
 
 function level2main() {
     let spawn = _.find(Game.spawns);
     let room = spawn.room;
+
+    if (room.energyAvailable >= 300) {
+        if (nextRole() != null) {
+            spawn.createCreep(
+                [MOVE, MOVE, CARRY, CARRY, WORK],
+                nextRole() + (Game.time % 10000)
+            );
+        }
+    }
 
     _.forEach(Memory.creeps, function(mem, name) {
         if (Game.creeps[name] === undefined)
