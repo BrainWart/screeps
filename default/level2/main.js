@@ -19,6 +19,13 @@ let actions = {
             creep.memory.actions.unshift("harvest");
     },
     build: function(creep) {
+        let constructionSite = _.find(Game.constructionSites, (site) => site.room = creep.room);
+
+        if (creep.pos.isNearTo(constructionSite))
+            creep.build(constructionSite);
+        else
+            creep.moveTo(constructionSite);
+
         if (creep.carry[RESOURCE_ENERGY] == 0) {
             creep.memory.actions.unshift("harvest");
             return;
