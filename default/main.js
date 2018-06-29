@@ -2,6 +2,7 @@ let actions = require("actions");
 let roles = require("roles");
 
 global.getRoomCreepNeeds = function(roomName) {
+	if (roomName === undefined) roomName = _.find(Game.rooms).name;
 	let room = Game.rooms[roomName];
 	let str = room.name + ": ";
 
@@ -32,11 +33,12 @@ module.exports.loop = function() {
 	_.forEach(Game.spawns, function(spawn) {
 		let currentRoomRoles = new roles(spawn.room);
 		let newRole = currentRoomRoles.next();
-
-		if (spawn.room.energyAvailable >= 300) {
-			spawn.spawnCreep([CARRY, CARRY, WORK, MOVE, MOVE],
-				newRole + Game.time % 10000,
-				actions[roles.actions[newRole]]());
-		}
+		if (newRole) {
+			if (spawn.room.energyAvailable >= 300) {
+				spawn.spawnCreep([CARRY, CARRY, WORK, MOVE, MOVE],
+					newRole + Game.time % 10000,
+					actions[roles.actions[newRole]]());
+			}
+	}
 	});
 }

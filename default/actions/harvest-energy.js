@@ -1,8 +1,8 @@
 function action() {
-    return {
-        role: action.role,
-        actions: [action.type]
-    }
+	return {
+		role: action.role,
+		actions: [action.type]
+	}
 }
 
 function act(creep) {

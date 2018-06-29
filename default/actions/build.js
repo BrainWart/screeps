@@ -1,16 +1,12 @@
 function action() {
-    return {
-        role: action.role,
-        actions: [action.type]
-    }
+	return {
+		role: action.role,
+		actions: [action.type]
+	}
 }
 
 function getSink(creep) {
-	for (let site in creep.room.find(FIND_MY_CONSTRUCTION_SITES)) {
-		return site
-	}
-
-	return null;
+	return _.find(creep.room.find(FIND_MY_CONSTRUCTION_SITES));
 }
 
 function act(creep) {
